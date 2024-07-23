@@ -5,6 +5,7 @@ import { Discipline } from '../screens/Discipline'
 import { Home } from '../screens/Home'
 import { Profile } from '../screens/Profile'
 import { MyRewards } from '../screens/MyRewards'
+import { Survey } from '../screens/Survey'
 
 const Stack = createNativeStackNavigator()
 
@@ -44,6 +45,13 @@ export default function AppRoutes() {
         component={Chapter}
         options={{
           title: 'Capítulo',
+        }}
+      />
+      <Stack.Screen
+        name='Survey'
+        component={Survey}
+        options={{
+          title: 'Questionário',
         }}
       />
     </Stack.Navigator>

@@ -1,44 +1,20 @@
 import React from 'react'
 import { useNavigation, useRoute } from '@react-navigation/native'
 import { DisciplineTitle } from '../components/DisciplineTitle'
-import '../styles/tailwind.css'
 import { StyledFlatList, StyledView } from '../styles'
 import { Header } from '../components/Header'
 import { defaultDisciplines } from '../constants/disciplines'
 import { ChapterCard } from '../components/ChapterCard'
 import { defaultUser } from '../constants/user'
+import { IDisciplineItemProps } from '../interfaces/IDisciplinesProps'
+
+import '../styles/tailwind.css'
 
 export function Discipline() {
   const navigation = useNavigation()
   const route = useRoute()
 
-  const { icon, title, discipline } = route.params as {
-    icon:
-      | 'divide'
-      | 'pen'
-      | 'flask'
-      | 'atom'
-      | 'brain'
-      | 'book-open'
-      | 'globe'
-      | 'leaf'
-      | 'users'
-      | 'language'
-      | 'flag'
-    title:
-      | 'Matemática'
-      | 'Português'
-      | 'Química'
-      | 'Física'
-      | 'Filosofia'
-      | 'História'
-      | 'Geografia'
-      | 'Biologia'
-      | 'Sociologia'
-      | 'Inglês'
-      | 'Espanhol'
-    discipline: keyof typeof defaultDisciplines
-  }
+  const { icon, title, discipline } = route.params as IDisciplineItemProps
 
   function handleChapter(
     points: number,
