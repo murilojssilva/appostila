@@ -1,5 +1,7 @@
 export const defaultUser = {
   name: 'Murilo',
+  lastName: 'de Jesus Santos Silva',
+  email: 'murilojssilva@outlook.com',
   username: 'murilojssilva',
   points: {
     math: [30, 0],
@@ -14,6 +16,8 @@ export const defaultUser = {
     sociology: [0, 0],
     spanish: [0, 0],
   },
+  created_at: '',
+  updated_at: '',
 }
 
 export const totalPoints = Object.values(defaultUser.points).reduce(

@@ -9,6 +9,7 @@ import { defaultUser } from '../constants/user'
 import { IDisciplineItemProps } from '../interfaces/IDisciplinesProps'
 
 import '../styles/tailwind.css'
+import { Title } from '../components/Title'
 
 export function Discipline() {
   const navigation = useNavigation()
@@ -32,28 +33,36 @@ export function Discipline() {
   return (
     <StyledView className='flex-1 flex-col p-4'>
       <Header title='Disciplina' icon='graduation-cap' />
-      <DisciplineTitle discipline={title} icon={icon} />
+      <DisciplineTitle
+        colorIcon='black'
+        colorText='gray-900'
+        discipline={title}
+        icon={icon}
+      />
       <StyledFlatList
         showsVerticalScrollIndicator={false}
         data={defaultDisciplines[discipline].chapters}
         keyExtractor={(item, index) => index.toString()}
+        ListHeaderComponent={<Title text='Capítulos' />}
         renderItem={({ item, index }) => (
-          <ChapterCard
-            chapter_number={(index + 1).toString()}
-            chapter_text={item.title}
-            icon={
-              defaultUser.points[discipline][0] >= index * 10
-                ? 'unlock'
-                : 'lock'
-            }
-            onPress={() =>
-              handleChapter(
-                defaultUser.points[discipline][0],
-                index * 10,
-                index + 1
-              )
-            }
-          />
+          <StyledView className='py-4 px-2'>
+            <ChapterCard
+              chapter_number={(index + 1).toString()}
+              chapter_text={item.title}
+              icon={
+                defaultUser.points[discipline][0] >= index * 10
+                  ? 'unlock'
+                  : 'lock'
+              }
+              onPress={() =>
+                handleChapter(
+                  defaultUser.points[discipline][0],
+                  index * 10,
+                  index + 1
+                )
+              }
+            />
+          </StyledView>
         )}
       />
     </StyledView>

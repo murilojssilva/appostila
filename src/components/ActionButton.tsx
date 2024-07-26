@@ -18,7 +18,7 @@ export function ActionButton({
   iconColor,
   ...props
 }: IActionButtonProps) {
-  const ioniconsIcons = ['eraser', 'clipboard-list']
+  const ioniconsIcons = ['eraser', 'clipboard-list', 'sign-in-alt']
   const IconComponent = ioniconsIcons.includes(icon) ? FontAwesome5 : Ionicons
 
   return (

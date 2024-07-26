@@ -25,19 +25,23 @@ export function ChapterCard({
     >
       <StyledView className='flex-2 flex-col '>
         <StyledText
-          className={`font-bold text-xl text-${icon ? 'gray-400' : 'gray-300'}`}
+          className={`font-bold text-xl text-${
+            icon === 'lock' ? 'gray-300' : 'gray-900'
+          }`}
         >
           Capítulo {chapter_number}
         </StyledText>
         <StyledText
-          className={`font-bold text-sm text-${icon ? 'gray-400' : 'gray-300'}`}
+          className={`font-bold text-sm text-${
+            icon === 'lock' ? 'gray-300' : 'gray-400'
+          }`}
         >
           {chapter_text}
         </StyledText>
       </StyledView>
       <FontAwesome5
         name={icon}
-        color={icon === 'lock' ? 'gray' : 'white'}
+        color={icon === 'lock' ? '#D1D5DB' : '#111827'}
         size={20}
       />
     </StyledTouchableOpacity>

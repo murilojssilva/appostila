@@ -4,12 +4,13 @@ import { TouchableOpacityProps } from 'react-native'
 
 interface IIconActionProps extends TouchableOpacityProps {
   icon: string
+  color: string
 }
 
-export function IconAction({ icon }: IIconActionProps) {
+export function IconAction({ icon, color }: IIconActionProps) {
   return (
     <StyledTouchableOpacity>
-      <FontAwesome5 name={icon} size={26} />
+      <FontAwesome5 name={icon} size={32} color={color} />
     </StyledTouchableOpacity>
   )
 }

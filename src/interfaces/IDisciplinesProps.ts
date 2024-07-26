@@ -54,6 +54,8 @@ export interface IDisciplineTitleProps {
     | 'users'
     | 'language'
     | 'flag'
+  colorIcon: string
+  colorText: string
 }
 
 export interface IDisciplineProps extends TouchableOpacityProps {
