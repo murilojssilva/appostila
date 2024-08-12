@@ -2,20 +2,21 @@ import { FontAwesome5 } from '@expo/vector-icons'
 import { Header } from '../components/Header'
 import { Title } from '../components/Title'
 import { defaultUser, totalPoints } from '../constants/user'
-import { StyledText, StyledView } from '../styles'
+import { StyledScrollView, StyledText, StyledView } from '../styles'
 import { DisciplineItem } from '../components/DisciplineItem'
+import { StatusBar } from '../components/StatusBar'
 
 export function MyRewards() {
   return (
     <StyledView className='flex-1'>
       <Header title='Meus pontos' icon='trophy' />
 
-      <StyledView className='flex-2 items-center'>
-        <FontAwesome5 name='trophy' color='gold' size={48} />
-        <StyledText className='text-bold'>{totalPoints}</StyledText>
+      <StyledView className='flex-2 items-center px-8'>
+        <StatusBar score={totalPoints} />
       </StyledView>
-      <Title text='Disciplinas' />
-      <StyledView className='flex-2 p-8'>
+
+      <StyledScrollView className='flex-2 p-8'>
+        <Title text='Disciplinas' />
         <DisciplineItem
           discipline='Matemática'
           points={defaultUser.points.math[0]}
@@ -60,7 +61,7 @@ export function MyRewards() {
           discipline='Espanhol'
           points={defaultUser.points.spanish[0]}
         />
-      </StyledView>
+      </StyledScrollView>
     </StyledView>
   )
 }

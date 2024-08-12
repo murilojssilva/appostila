@@ -5,6 +5,7 @@ import { StyledText, StyledView, StyledScrollView } from '../styles'
 import { defaultDisciplines } from '../constants/disciplines'
 import { QuestionList } from '../components/QuestionList'
 import { ActionButton } from '../components/ActionButton'
+import { Alert } from 'react-native'
 
 export function Survey() {
   const navigation = useNavigation()
@@ -38,18 +39,36 @@ export function Survey() {
   }
 
   const handleSubmit = () => {
+    const totalQuestions = chapterData.questions.length
+    const answeredQuestions = Object.keys(answers).length
+
+    if (answeredQuestions < totalQuestions) {
+      Alert.alert(
+        'Erro ao submeter respostas',
+        'Por favor, responda todas as perguntas antes de submeter.'
+      )
+      return
+    }
+
     const correctAnswers = chapterData.questions.map(
       (q, index) => q.correctAnswer
     )
     const userAnswers = Object.values(answers)
+    const correctCount = correctAnswers.reduce((count, answer, index) => {
+      return answer === userAnswers[index] ? count + 1 : count
+    }, 0)
+
+    const score = (correctCount / totalQuestions) * 10
     const isCorrect = correctAnswers.every(
       (answer, index) => answer === userAnswers[index]
     )
 
-    alert(
-      isCorrect
-        ? 'Todas as respostas estão corretas!'
-        : 'Algumas respostas estão incorretas.'
+    Alert.alert(
+      correctCount === totalQuestions
+        ? 'Parabéns. Todas as respostas estão corretas!'
+        : `Você tirou ${score.toFixed(
+            1
+          )} (${correctCount} de ${totalQuestions} acertos).`
     )
     navigation.navigate('Discipline', { discipline })
   }
@@ -67,11 +86,11 @@ export function Survey() {
           answers={answers}
         />
         <ActionButton
-          text='Verificar respostas'
-          backgroundColor='blue-500'
+          text=' Verificar respostas'
+          backgroundColor='cyan-700'
           icon='checkbox'
           iconColor='white'
-          textColor='white'
+          textColor='gray-100'
           onPress={handleSubmit}
         />
       </StyledView>

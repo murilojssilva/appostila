@@ -19,7 +19,10 @@ export function Chapter() {
   return (
     <StyledView className='flex-1 flex-col py-4'>
       <StyledScrollView className='flex-2'>
-        <Header title='Capítulo' icon='graduation-cap' />
+        <Header
+          title={defaultDisciplines[discipline].name}
+          icon='graduation-cap'
+        />
 
         <StyledView className='flex-2 flex-col gap-2 items-center my-8'>
           <StyledText className='text-lg font-bold'>
@@ -35,10 +38,10 @@ export function Chapter() {
       </StyledScrollView>
       <StyledView className='p-4'>
         <ActionButton
-          text='Ver questões'
+          text=' Ver questões'
           icon='clipboard-list'
           backgroundColor='cyan-700'
-          textColor='white'
+          textColor='gray-100'
           iconColor='white'
           onPress={() =>
             navigation.navigate('Survey', {

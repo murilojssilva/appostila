@@ -7,9 +7,9 @@ interface IIconActionProps extends TouchableOpacityProps {
   color: string
 }
 
-export function IconAction({ icon, color }: IIconActionProps) {
+export function IconAction({ icon, color, ...props }: IIconActionProps) {
   return (
-    <StyledTouchableOpacity>
+    <StyledTouchableOpacity {...props}>
       <FontAwesome5 name={icon} size={32} color={color} />
     </StyledTouchableOpacity>
   )
