@@ -1,14 +1,23 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useNavigation } from '@react-navigation/native'
 import { DisciplineCard } from '../components/DisciplineCard'
 import { Title } from '../components/Title'
-import { StyledScrollView, StyledText, StyledView } from '../styles'
+import {
+  StyledFlatList,
+  StyledScrollView,
+  StyledText,
+  StyledView,
+} from '../styles'
 import { IconAction } from '../components/IconAction'
 import { MyRewardCard } from '../components/MyRewardsCard'
 import { defaultUser } from '../constants/user'
+import { useDisciplines } from '../contexts/DisciplinesContext'
 
 export function Home() {
   const navigation = useNavigation()
+
+  const { disciplines } = useDisciplines()
+  console.log(disciplines)
 
   return (
     <StyledView className='flex-1 bg-white'>
@@ -34,135 +43,27 @@ export function Home() {
           onPress={() => navigation.navigate('MyRewards' as never)}
         />
         <StyledView className='my-8' />
-        <Title text='Disciplinas' />
 
-        <StyledScrollView
+        <StyledFlatList
           showsVerticalScrollIndicator={false}
-          className='flex-1 gap-2'
-        >
-          <DisciplineCard
-            discipline='Matemática'
-            icon='divide'
-            onPress={() =>
-              navigation.navigate('Discipline', {
-                title: 'Matemática',
-                icon: 'divide',
-                discipline: 'math',
-              })
-            }
-          />
-          <DisciplineCard
-            discipline='Português'
-            icon='pen'
-            onPress={() =>
-              navigation.navigate('Discipline', {
-                title: 'Português',
-                icon: 'pen',
-                discipline: 'portuguese',
-              })
-            }
-          />
-          <DisciplineCard
-            discipline='Química'
-            icon='flask'
-            onPress={() =>
-              navigation.navigate('Discipline', {
-                title: 'Química',
-                icon: 'flask',
-                discipline: 'chemistry',
-              })
-            }
-          />
-          <DisciplineCard
-            discipline='Física'
-            icon='atom'
-            onPress={() =>
-              navigation.navigate('Discipline', {
-                title: 'Física',
-                icon: 'atom',
-                discipline: 'physics',
-              })
-            }
-          />
-          <DisciplineCard
-            discipline='Filosofia'
-            icon='brain'
-            onPress={() =>
-              navigation.navigate('Discipline', {
-                title: 'Filosofia',
-                icon: 'brain',
-                discipline: 'philosophy',
-              })
-            }
-          />
-          <DisciplineCard
-            discipline='História'
-            icon='book-open'
-            onPress={() =>
-              navigation.navigate('Discipline', {
-                title: 'História',
-                icon: 'book-open',
-                discipline: 'history',
-              })
-            }
-          />
-          <DisciplineCard
-            discipline='Geografia'
-            icon='globe'
-            onPress={() =>
-              navigation.navigate('Discipline', {
-                title: 'Geografia',
-                icon: 'globe',
-                discipline: 'geography',
-              })
-            }
-          />
-          <DisciplineCard
-            discipline='Biologia'
-            icon='leaf'
-            onPress={() =>
-              navigation.navigate('Discipline', {
-                title: 'Biologia',
-                icon: 'leaf',
-                discipline: 'biology',
-              })
-            }
-          />
-          <DisciplineCard
-            discipline='Sociologia'
-            icon='users'
-            onPress={() =>
-              navigation.navigate('Discipline', {
-                title: 'Sociologia',
-                icon: 'users',
-                discipline: 'sociology',
-              })
-            }
-          />
-          <DisciplineCard
-            discipline='Inglês'
-            icon='language'
-            onPress={() =>
-              navigation.navigate('Discipline', {
-                title: 'Inglês',
-                icon: 'language',
-                discipline: 'english',
-              })
-            }
-          />
-          <DisciplineCard
-            discipline='Espanhol'
-            icon='flag'
-            onPress={() =>
-              navigation.navigate('Discipline', {
-                title: 'Espanhol',
-                icon: 'flag',
-                discipline: 'spanish',
-              })
-            }
-          />
-          <StyledView className='mb-4' />
-        </StyledScrollView>
+          data={disciplines}
+          className='flex-2'
+          keyExtractor={(item) => item.id}
+          ListHeaderComponent={<Title text='Disciplinas' />}
+          renderItem={({ item }) => (
+            <DisciplineCard
+              discipline={item.displayName}
+              icon='divide'
+              onPress={() =>
+                navigation.navigate('Discipline', {
+                  title: item.displayName,
+                  icon: 'divide',
+                  discipline: item.name,
+                })
+              }
+            />
+          )}
+        />
       </StyledView>
     </StyledView>
   )
