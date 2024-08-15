@@ -2,22 +2,17 @@ import React, { useEffect } from 'react'
 import { useNavigation } from '@react-navigation/native'
 import { DisciplineCard } from '../components/DisciplineCard'
 import { Title } from '../components/Title'
-import {
-  StyledFlatList,
-  StyledScrollView,
-  StyledText,
-  StyledView,
-} from '../styles'
+import { StyledFlatList, StyledText, StyledView } from '../styles'
 import { IconAction } from '../components/IconAction'
 import { MyRewardCard } from '../components/MyRewardsCard'
 import { defaultUser } from '../constants/user'
 import { useDisciplines } from '../contexts/DisciplinesContext'
+import { SkeletonDisciplineCard } from '../components/Skeletons/SkeletonDisciplineCard'
 
 export function Home() {
   const navigation = useNavigation()
 
-  const { disciplines } = useDisciplines()
-  console.log(disciplines)
+  const { disciplines, isLoading } = useDisciplines()
 
   return (
     <StyledView className='flex-1 bg-white'>
@@ -44,26 +39,36 @@ export function Home() {
         />
         <StyledView className='my-8' />
 
-        <StyledFlatList
-          showsVerticalScrollIndicator={false}
-          data={disciplines}
-          className='flex-2'
-          keyExtractor={(item) => item.id}
-          ListHeaderComponent={<Title text='Disciplinas' />}
-          renderItem={({ item }) => (
-            <DisciplineCard
-              discipline={item.displayName}
-              icon='divide'
-              onPress={() =>
-                navigation.navigate('Discipline', {
-                  title: item.displayName,
-                  icon: 'divide',
-                  discipline: item.name,
-                })
-              }
+        {isLoading ? (
+          <StyledView className='flex-2 flex'>
+            <Title text='Disciplinas' />
+            <StyledFlatList
+              data={Array(11).fill({})}
+              renderItem={({ item }) => <SkeletonDisciplineCard />}
             />
-          )}
-        />
+          </StyledView>
+        ) : (
+          <StyledFlatList
+            showsVerticalScrollIndicator={false}
+            data={disciplines}
+            className='flex-2'
+            keyExtractor={(item) => item.id}
+            ListHeaderComponent={<Title text='Disciplinas' />}
+            renderItem={({ item }) => (
+              <DisciplineCard
+                discipline={item.displayName}
+                icon={item.icon}
+                onPress={() =>
+                  navigation.navigate('Discipline', {
+                    title: item.displayName,
+                    icon: item.icon,
+                    discipline: item.name,
+                  })
+                }
+              />
+            )}
+          />
+        )}
       </StyledView>
     </StyledView>
   )

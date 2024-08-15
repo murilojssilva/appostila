@@ -11,6 +11,7 @@ interface DisciplinesContextData {
   disciplines: Discipline[]
   fetchDisciplines: () => Promise<void>
   createDiscipline: (name: string, displayName: string) => Promise<void>
+  isLoading: boolean
   updateDiscipline: (
     id: string,
     name: string,
@@ -27,13 +28,17 @@ export const DisciplinesProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
   const [disciplines, setDisciplines] = useState<Discipline[]>([])
+  const [isLoading, setIsLoading] = useState(false)
 
   const fetchDisciplines = async () => {
+    setIsLoading(true)
     try {
       const response = await api.get('/disciplines')
       setDisciplines(response.data.disciplines)
     } catch (error) {
       console.error('Failed to fetch disciplines:', error)
+    } finally {
+      setIsLoading(false)
     }
   }
 
@@ -76,6 +81,7 @@ export const DisciplinesProvider: React.FC<{ children: React.ReactNode }> = ({
     <DisciplinesContext.Provider
       value={{
         disciplines,
+        isLoading,
         fetchDisciplines,
         createDiscipline,
         updateDiscipline,
